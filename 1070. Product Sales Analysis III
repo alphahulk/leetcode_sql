@@ -1,3 +1,10 @@
 -- Write your PostgreSQL query statement below
 with cte as (select *,row_number() over(partition by product_id) rn from sales join product using(product_id) )
 select product_id ,year as first_year ,quantity,price from cte where rn=1
+
+
+select product_id, year as first_year, quantity, price
+from sales
+where (product_id, year) in (select product_id, min(year)
+from Sales
+group by product_id)
