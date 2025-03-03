@@ -1,0 +1,12 @@
+WITH cte AS (
+  SELECT num, COUNT(num) OVER (PARTITION BY num) AS num_count
+  FROM mynumbers
+)
+SELECT MAX(num) num
+FROM cte
+WHERE num_count = 1;
+
+-- SELECT MAX(num)
+-- FROM mynumbers
+-- GROUP BY num
+-- HAVING COUNT(num) = 1;
